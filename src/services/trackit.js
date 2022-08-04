@@ -12,4 +12,6 @@ function postLogin(login) {
   return promise;
 }
 
+//function 
+
 export { postCadastrar, postLogin };

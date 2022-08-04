@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { postLogin } from "../services/trackit";
 import Loading from "../Loading";
+import UserContext from "./context/UserContext";
 
 export default function TelaLogin() {
-    const [entrando, setEntrando] = useState(false)
+    const [entrando, setEntrando] = useState(false);
     const navigate = useNavigate();
+    const {setUsuario} = useContext(UserContext);
     const [login, setLogin] = useState({
         email: "",
         password: "",
@@ -18,12 +20,20 @@ export default function TelaLogin() {
 
     function entrar(e) {
         e.preventDefault();
-        setEntrando(!entrando)
+        setEntrando(true)
 
         postLogin(login)
             .then(resposta => {
-            console.log(resposta.data);
-            setEntrando(!entrando);
+            localStorage.setItem('trackit', JSON.stringify({autenticador: resposta.data.token, horario: +new Date()}));
+            setUsuario({
+                email: resposta.data.email,
+                id: resposta.data.id,
+                image: resposta.data.image,
+                name: resposta.data.name,
+                password: resposta.data.password,
+                token: resposta.data.token
+            });
+            console.log(resposta.data)
             navigate('/hoje');
             })
             .catch(erro => {
