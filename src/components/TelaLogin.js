@@ -55,6 +55,10 @@ const Main = styled.div`
         color: #52B6FF;
         font-size: 14px;
         text-align: center;
-        text-decoration: underline;
+        
+        &:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
     }
 `;
