@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { postCadastrar } from '../services/trackit';
-import ThreeDots from "../ThreeDots";
+import Loading from "../Loading";
 
 export default function TelaCadastro() {
     const navigate = useNavigate();
@@ -27,11 +27,18 @@ export default function TelaCadastro() {
             console.log(resposta.data);
             setEnviando(!enviando);
             navigate('/');
+            })
+            .catch(erro => {
+            alert('Não foi possível finalizar o cadastro, tente novamente');
+            console.log(erro, 'erro');
+            setCadastro({
+                email: "",
+                name: "",
+                image: "",
+                password: ""
             });
-            // .catch(erro => {
-            // console.log(erro);
-            // setEnviando(!enviando);
-            // });
+            setEnviando(false);
+            });
     }
 
     return (
@@ -39,6 +46,7 @@ export default function TelaCadastro() {
             <img src="./assets/logo_TrackIt.png" alt='logo TrackIt' />
             <form onSubmit={cadastrar}>
                 <Input
+                    disabled={enviando}
                     required
                     type='email'
                     name='email'
@@ -47,6 +55,7 @@ export default function TelaCadastro() {
                     placeholder='email'
                 />
                 <Input
+                    disabled={enviando}
                     required
                     type='password'
                     name='password'
@@ -55,6 +64,7 @@ export default function TelaCadastro() {
                     placeholder='senha'
                 />
                 <Input
+                    disabled={enviando}
                     required
                     type='text'
                     name='name'
@@ -63,6 +73,7 @@ export default function TelaCadastro() {
                     placeholder='nome'
                 />
                 <Input
+                    disabled={enviando}
                     required
                     type='url'
                     name='image'
@@ -70,9 +81,9 @@ export default function TelaCadastro() {
                     onChange={atualizarInput}
                     placeholder='foto'
                 />
-                <Button type='submit'>{enviando ? '...' : 'Cadastrar'}</Button>
+                <Button type='submit' disabled={enviando}>{enviando ? <Loading /> : 'Cadastrar'}</Button>
             </form>
-            
+
             <Link to="/">Já tem uma conta? Faça login!</Link>
         </Main>
     );
@@ -99,7 +110,7 @@ const Main = styled.div`
         text-align: center;
 
         &:hover {
-            opacity: 0.8;
+            opacity: 0.7;
             text-decoration: underline;
         }
     }
@@ -118,6 +129,11 @@ const Input = styled.input`
     &::placeholder {
         color: #DBDBDB;
     }
+
+    &:disabled {
+        background-color: #F2F2F2;
+        color: #D4D4D4;
+    }
 `;
 
 const Button = styled.button`
@@ -130,9 +146,17 @@ const Button = styled.button`
     margin-bottom: 25px;
     border-radius: 5px;
     border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
-        opacity: 0.8;
+        opacity: 0.7;
         cursor: pointer;
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: default;
     }
 `;
