@@ -12,6 +12,20 @@ function postLogin(login) {
   return promise;
 }
 
-//function 
+function Header() {
+  const autenticador = JSON.parse(localStorage.getItem('trackit'));
+  const config = {
+    headers: {
+      Authorization: `Bearer ${autenticador.token}`
+    }
+  };
+  return config;
+}
 
-export { postCadastrar, postLogin };
+function getHabitos() {
+  const config = Header();
+  const promise = axios.get(`${URL_BASE}/habits`, config);
+  return promise;
+}
+
+export { postCadastrar, postLogin, getHabitos };

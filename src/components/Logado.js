@@ -34,5 +34,5 @@ const Wrapper = styled.div`
     background-color: #e5e5e5;
     width: 100vw;
     height: 100vh;
-    //margin: 70px 0;
+    margin: 70px 0;
 `;

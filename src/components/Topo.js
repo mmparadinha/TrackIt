@@ -21,7 +21,7 @@ const Navbar = styled.div`
     align-items: center;
     height: 70px;
     width: 100%;
-    padding: 0 20px;
+    padding: 0 18px;
     position: fixed;
     top: 0;
     left: 0;

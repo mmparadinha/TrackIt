@@ -24,7 +24,7 @@ export default function TelaLogin() {
 
         postLogin(login)
             .then(resposta => {
-            localStorage.setItem('trackit', JSON.stringify({autenticador: resposta.data.token, horario: +new Date()}));
+            localStorage.setItem('trackit', JSON.stringify({token: resposta.data.token, horario: +new Date()}));
             setUsuario({
                 email: resposta.data.email,
                 id: resposta.data.id,
