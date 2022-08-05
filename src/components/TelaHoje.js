@@ -1,35 +1,33 @@
 import styled from "styled-components";
-import { useEffect } from "react";
-import { getHabitos } from "../services/trackit";
+import { useEffect, useState } from "react";
+import { getHabitosHoje } from "../services/trackit";
 import RecadoProgressoHoje from "./RecadoProgressoHoje";
+import { useContext } from 'react';
+import ProgressContext from './context/ProgressContext';
+import HabitoHoje from "./HabitoHoje";
+import HabitsTodayContext from "./context/HabitsTodayContext";
+import Loading from "../Loading";
 
 export default function TelaHoje() {
+    const { setProgresso } = useContext(ProgressContext);
+    const {habitosHoje, setHabitosHoje} = useContext(HabitsTodayContext);
 
     useEffect(() => {
-        getHabitos()
-            .then(resposta => console.log(resposta.data))
+        getHabitosHoje()
+            .then(resposta => {
+                setHabitosHoje(resposta.data);
+            })
             .catch(erro => console.log(erro));
-        },
+    },
     []);
+
+    useEffect(() => {habitosHoje && setProgresso(100*habitosHoje.filter((habito) => habito.done).length / habitosHoje.length)}, [habitosHoje]);
 
     return (
         <Container>
             <h2>Dia, dd/mm</h2>
-            <RecadoProgressoHoje />
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
-            <h1>tela hoje</h1>
+            {habitosHoje ? <RecadoProgressoHoje /> : ''}
+            {habitosHoje ? habitosHoje.map((value, index) => <HabitoHoje key={index} habito={value} />) : <Loading />}
         </Container>
     );
 }

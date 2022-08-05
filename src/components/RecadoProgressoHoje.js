@@ -14,5 +14,6 @@ export default function RecadoProgressoHoje() {
 
 const Wrapper = styled.p`
     font-size: 18px;
+    margin-bottom: 28px;
     color: ${props => props.progresso === 0 ? '#BABABA' : '#8FC549'};
 `;

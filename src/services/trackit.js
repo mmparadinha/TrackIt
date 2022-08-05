@@ -22,10 +22,10 @@ function Header() {
   return config;
 }
 
-function getHabitos() {
+function getHabitosHoje() {
   const config = Header();
-  const promise = axios.get(`${URL_BASE}/habits`, config);
+  const promise = axios.get(`${URL_BASE}/habits/today`, config);
   return promise;
 }
 
-export { postCadastrar, postLogin, getHabitos };
+export { postCadastrar, postLogin, getHabitosHoje };

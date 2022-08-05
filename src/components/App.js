@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import UserContext from "./context/UserContext";
 import ProgressContext from "./context/ProgressContext";
+import HabitsTodayContext from "./context/HabitsTodayContext";
 import GlobalStyles from "./GlobalStyles";
 import TelaLogin from "./TelaLogin";
 import TelaCadastro from "./TelaCadastro";
@@ -20,10 +21,12 @@ export default function App() {
     token: ''
   });
   const [progresso, setProgresso] = useState(0);
+  const [habitosHoje, setHabitosHoje] = useState(null)
 
   return (
     <>
       <GlobalStyles />
+      <HabitsTodayContext.Provider value={{habitosHoje, setHabitosHoje}}>
       <ProgressContext.Provider value={{progresso, setProgresso}}>
       <UserContext.Provider value={{usuario, setUsuario}}>
         <BrowserRouter>
@@ -49,6 +52,7 @@ export default function App() {
         </BrowserRouter>
       </UserContext.Provider>
       </ProgressContext.Provider>
+      </HabitsTodayContext.Provider>
     </>
   );
 }

@@ -19,20 +19,25 @@ export default function Logado({children}) {
 
     if (autenticador) {
         return (
-            <Wrapper>
+            <Container>
                 <Topo />
-                {children}
+                <Wrapper >
+                    {children}
+                </Wrapper>
                 <Menu />
-            </Wrapper>
+            </Container>
         );
     } else {
         erroAutenticador();
     }
 }
 
-const Wrapper = styled.div`
-    background-color: #e5e5e5;
+const Container = styled.div`
     width: 100vw;
-    height: 100vh;
-    margin: 70px 0;
+    min-height: 100vh;
+    background-color: #e5e5e5;
+`;
+
+const Wrapper = styled.div`
+    padding: 75px 0;
 `;
