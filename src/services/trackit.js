@@ -15,9 +15,7 @@ function postLogin(login) {
 function Header() {
   const autenticador = JSON.parse(localStorage.getItem('trackit'));
   const config = {
-    headers: {
-      Authorization: `Bearer ${autenticador.token}`
-    }
+    headers: { Authorization: `Bearer ${autenticador.token}` }
   };
   return config;
 }
@@ -28,4 +26,16 @@ function getHabitosHoje() {
   return promise;
 }
 
-export { postCadastrar, postLogin, getHabitosHoje };
+function marcarHabito(id_habito) {
+  const config = Header();
+  const promise = axios.post(`${URL_BASE}/habits/${id_habito}/check`, '', config);
+  return promise;
+}
+
+function desmarcarHabito(id_habito) {
+  const config = Header();
+  const promise = axios.post(`${URL_BASE}/habits/${id_habito}/uncheck`, '', config);
+  return promise;
+}
+
+export { postCadastrar, postLogin, getHabitosHoje, marcarHabito, desmarcarHabito };

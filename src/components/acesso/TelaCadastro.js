@@ -1,78 +1,89 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
-import { postLogin } from "../services/trackit";
-import Loading from "../Loading";
-import UserContext from "./context/UserContext";
+import { useState } from "react";
+import { postCadastrar } from '../../services/trackit';
+import Loading from "../comuns/Loading";
 
-export default function TelaLogin() {
-    const [entrando, setEntrando] = useState(false);
+export default function TelaCadastro() {
     const navigate = useNavigate();
-    const {setUsuario} = useContext(UserContext);
-    const [login, setLogin] = useState({
+    const [enviando, setEnviando] = useState(false)
+    const [cadastro, setCadastro] = useState({
         email: "",
-        password: "",
+        name: "",
+        image: "",
+        password: ""
     });
 
     function atualizarInput(e) {
-        setLogin({ ...login, [e.target.name]: e.target.value })
+        setCadastro({ ...cadastro, [e.target.name]: e.target.value })
     }
 
-    function entrar(e) {
+    function cadastrar(e) {
         e.preventDefault();
-        setEntrando(true)
+        setEnviando(!enviando)
 
-        postLogin(login)
+        postCadastrar(cadastro)
             .then(resposta => {
-            localStorage.setItem('trackit', JSON.stringify({token: resposta.data.token, horario: +new Date()}));
-            setUsuario({
-                email: resposta.data.email,
-                id: resposta.data.id,
-                image: resposta.data.image,
-                name: resposta.data.name,
-                password: resposta.data.password,
-                token: resposta.data.token
-            });
-            console.log(resposta.data)
-            navigate('/hoje');
+                console.log(resposta.data);
+                setEnviando(!enviando);
+                navigate('/');
             })
             .catch(erro => {
-            alert('Não foi possível logar, tente novamente');
-            console.log(erro, 'erro');
-            setLogin({
-                email: "",
-                password: "",
-            });
-            setEntrando(false);
+                alert(erro.response.data.message);
+                setCadastro({
+                    email: "",
+                    name: "",
+                    image: "",
+                    password: ""
+                });
+                setEnviando(false);
             });
     }
 
     return (
         <Main>
             <img src="./assets/logo_TrackIt.png" alt='logo TrackIt' />
-            <form onSubmit={entrar}>
+            <form onSubmit={cadastrar}>
                 <Input
-                    disabled={entrando}
+                    disabled={enviando}
                     required
                     type='email'
                     name='email'
-                    value={login.email}
+                    value={cadastro.email}
                     onChange={atualizarInput}
                     placeholder='email'
                 />
                 <Input
-                    disabled={entrando}
+                    disabled={enviando}
                     required
                     type='password'
                     name='password'
-                    value={login.password}
+                    value={cadastro.password}
                     onChange={atualizarInput}
                     placeholder='senha'
                 />
-                <Button type='submit' disabled={entrando}>{entrando ? <Loading /> : 'Entrar'}</Button>
+                <Input
+                    disabled={enviando}
+                    required
+                    type='text'
+                    name='name'
+                    value={cadastro.name}
+                    onChange={atualizarInput}
+                    placeholder='nome'
+                />
+                <Input
+                    disabled={enviando}
+                    required
+                    type='url'
+                    name='image'
+                    value={cadastro.image}
+                    onChange={atualizarInput}
+                    placeholder='foto'
+                />
+                <Button type='submit' disabled={enviando}>{enviando ? <Loading /> : 'Cadastrar'}</Button>
             </form>
 
-            <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+            <Link to="/">Já tem uma conta? Faça login!</Link>
         </Main>
     );
 }

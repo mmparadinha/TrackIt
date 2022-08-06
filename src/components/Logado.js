@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import Topo from './Topo';
-import Menu from './Menu';
+import Topo from './comuns/Topo';
+import Menu from './comuns/Menu';
 import styled from "styled-components";
 
 export default function Logado({children}) {

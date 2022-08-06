@@ -1,90 +1,78 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { postCadastrar } from '../services/trackit';
-import Loading from "../Loading";
+import { useState, useContext } from "react";
+import { postLogin } from "../../services/trackit";
+import Loading from "../comuns/Loading";
+import UserContext from "../context/UserContext";
 
-export default function TelaCadastro() {
+export default function TelaLogin() {
+    const [entrando, setEntrando] = useState(false);
     const navigate = useNavigate();
-    const [enviando, setEnviando] = useState(false)
-    const [cadastro, setCadastro] = useState({
+    const {setUsuario} = useContext(UserContext);
+    const [login, setLogin] = useState({
         email: "",
-        name: "",
-        image: "",
-        password: ""
+        password: "",
     });
 
     function atualizarInput(e) {
-        setCadastro({ ...cadastro, [e.target.name]: e.target.value })
+        setLogin({ ...login, [e.target.name]: e.target.value })
     }
 
-    function cadastrar(e) {
+    function entrar(e) {
         e.preventDefault();
-        setEnviando(!enviando)
+        setEntrando(true)
 
-        postCadastrar(cadastro)
+        postLogin(login)
             .then(resposta => {
-            console.log(resposta.data);
-            setEnviando(!enviando);
-            navigate('/');
+            localStorage.setItem('trackit', JSON.stringify({token: resposta.data.token, horario: +new Date()}));
+            setUsuario({
+                email: resposta.data.email,
+                id: resposta.data.id,
+                image: resposta.data.image,
+                name: resposta.data.name,
+                password: resposta.data.password,
+                token: resposta.data.token
+            });
+            console.log(resposta.data)
+            navigate('/hoje');
             })
             .catch(erro => {
-            alert('Não foi possível finalizar o cadastro, tente novamente');
+            alert('Não foi possível logar, tente novamente');
             console.log(erro, 'erro');
-            setCadastro({
+            setLogin({
                 email: "",
-                name: "",
-                image: "",
-                password: ""
+                password: "",
             });
-            setEnviando(false);
+            setEntrando(false);
             });
     }
 
     return (
         <Main>
             <img src="./assets/logo_TrackIt.png" alt='logo TrackIt' />
-            <form onSubmit={cadastrar}>
+            <form onSubmit={entrar}>
                 <Input
-                    disabled={enviando}
+                    disabled={entrando}
                     required
                     type='email'
                     name='email'
-                    value={cadastro.email}
+                    value={login.email}
                     onChange={atualizarInput}
                     placeholder='email'
                 />
                 <Input
-                    disabled={enviando}
+                    disabled={entrando}
                     required
                     type='password'
                     name='password'
-                    value={cadastro.password}
+                    value={login.password}
                     onChange={atualizarInput}
                     placeholder='senha'
                 />
-                <Input
-                    disabled={enviando}
-                    required
-                    type='text'
-                    name='name'
-                    value={cadastro.name}
-                    onChange={atualizarInput}
-                    placeholder='nome'
-                />
-                <Input
-                    disabled={enviando}
-                    required
-                    type='url'
-                    name='image'
-                    value={cadastro.image}
-                    onChange={atualizarInput}
-                    placeholder='foto'
-                />
-                <Button type='submit' disabled={enviando}>{enviando ? <Loading /> : 'Cadastrar'}</Button>
+                <Button type='submit' disabled={entrando}>{entrando ? <Loading /> : 'Entrar'}</Button>
             </form>
 
-            <Link to="/">Já tem uma conta? Faça login!</Link>
+            <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
         </Main>
     );
 }

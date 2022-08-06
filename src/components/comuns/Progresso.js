@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import ProgressContext from './context/ProgressContext';
+import ProgressContext from '../context/ProgressContext';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
