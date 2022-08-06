@@ -1,17 +1,24 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { marcarHabito, desmarcarHabito } from "../../services/trackit";
+import { useContext } from "react";
+import HabitsTodayContext from "../context/HabitsTodayContext";
+import { getHabitosHoje } from "../../services/trackit";
 
 export default function HabitoHoje({ habito }) {
+    const { setHabitosHoje } = useContext(HabitsTodayContext);
 
     function statusHabito(props) {
         if (habito.done) {
             desmarcarHabito(props)
-                .then(() => console.log('desmarcado'))
+                .then(getHabitosHoje()
+                        .then(resposta => setHabitosHoje(resposta.data))
+                        .catch(erro => console.log(erro.response.data.message)))
                 .catch(erro => console.log(erro.response.data.message));
         } else {
             marcarHabito(props)
-                .then(() => console.log('marcado'))
+                .then(getHabitosHoje()
+                        .then(resposta => setHabitosHoje(resposta.data))
+                        .catch(erro => console.log(erro.response.data.message)))
                 .catch(erro => console.log(erro.response.data.message));
         }
     }

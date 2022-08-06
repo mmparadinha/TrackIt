@@ -39,5 +39,5 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-    padding: 75px 0;
+    padding: 70px 0;
 `;
