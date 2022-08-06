@@ -13,7 +13,6 @@ import 'dayjs/locale/pt-br'
 export default function TelaHoje() {
     const { progresso, setProgresso } = useContext(ProgressContext);
     const { habitosHoje, setHabitosHoje } = useContext(HabitsTodayContext);
-    dayjs.locale('pt-br');
 
     useEffect(() => {
         getHabitosHoje()
@@ -26,7 +25,7 @@ export default function TelaHoje() {
 
     return (
         <Container>
-            <h2>{`${dayjs().format('dddd')}, ${dayjs().format('DD')}/${dayjs().format('MM')}`}</h2>
+            <h2>{`${dayjs('pt-br').format('dddd')}, ${dayjs().format('DD')}/${dayjs().format('MM')}`}</h2>
             {habitosHoje !== null && <RecadoProgressoHoje />}
             {habitosHoje !== null ? habitosHoje.map(value => <HabitoHoje key={value.id} habito={value} />) : <Loading />}
         </Container>

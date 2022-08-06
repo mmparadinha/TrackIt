@@ -53,7 +53,7 @@ const Wrapper = styled.div`
     h3 {
         font-size: 20px;
         margin-bottom: 8px;
-     }
+    }
 
     p {
         font-size: 13px;

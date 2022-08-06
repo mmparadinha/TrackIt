@@ -3,6 +3,7 @@ import { useState } from "react";
 import UserContext from "./context/UserContext";
 import ProgressContext from "./context/ProgressContext";
 import HabitsTodayContext from "./context/HabitsTodayContext";
+import AllHabitsContext from "./context/AllHabitsContext";
 import GlobalStyles from "./comuns/GlobalStyles";
 import TelaLogin from "./acesso/TelaLogin";
 import TelaCadastro from "./acesso/TelaCadastro";
@@ -20,12 +21,14 @@ export default function App() {
     password: '',
     token: ''
   });
-  const [progresso, setProgresso] = useState(undefined);
-  const [habitosHoje, setHabitosHoje] = useState(null)
+  const [progresso, setProgresso] = useState(0);
+  const [habitosHoje, setHabitosHoje] = useState(null);
+  const [habitos, setHabitos] = useState(null);
 
   return (
     <>
       <GlobalStyles />
+      <AllHabitsContext.Provider value={{ habitos, setHabitos }}>
       <HabitsTodayContext.Provider value={{ habitosHoje, setHabitosHoje }}>
         <ProgressContext.Provider value={{ progresso, setProgresso }}>
           <UserContext.Provider value={{ usuario, setUsuario }}>
@@ -53,6 +56,7 @@ export default function App() {
           </UserContext.Provider>
         </ProgressContext.Provider>
       </HabitsTodayContext.Provider>
+      </AllHabitsContext.Provider>
     </>
   );
 }

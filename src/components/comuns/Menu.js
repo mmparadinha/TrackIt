@@ -40,6 +40,11 @@ const Footer = styled.div`
         font-size: 18px;
         color: #52B6FF;
     }
+
+    a:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
 `;
 
 const Container = styled.div`
@@ -47,4 +52,9 @@ const Container = styled.div`
     height: 92px;
     position: relative;
     bottom: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #52B6FF;
+    border-radius: 50%;
 `;

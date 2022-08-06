@@ -38,4 +38,22 @@ function desmarcarHabito(id_habito) {
   return promise;
 }
 
-export { postCadastrar, postLogin, getHabitosHoje, marcarHabito, desmarcarHabito };
+function getListaHabitos() {
+  const config = Header();
+  const promise = axios.get(`${URL_BASE}/habits`, config);
+  return promise;
+}
+
+function postHabitoNovo(body) {
+  const config = Header();
+  const promise = axios.post(`${URL_BASE}/habits`, body, config);
+  return promise;
+}
+
+function postDeletar(id_habito) {
+  const config = Header();
+  const promise = axios.delete(`${URL_BASE}/habits/${id_habito}`, config);
+  return promise;
+}
+
+export { postCadastrar, postLogin, getHabitosHoje, marcarHabito, desmarcarHabito, getListaHabitos, postHabitoNovo, postDeletar};
