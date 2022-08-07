@@ -6,6 +6,9 @@ import HabitoAtivo from "./HabitoAtivo";
 import Loading from "../comuns/Loading";
 import AllHabitsContext from "../context/AllHabitsContext";
 import NewHabit from "../context/NewHabit";
+import HabitsTodayContext from "../context/HabitsTodayContext";
+import ProgressContext from "../context/ProgressContext";
+import { getHabitosHoje } from "../../services/trackit";
 
 export default function TelaHabitos() {
     const [criar, setCriar] = useState(false);
@@ -13,18 +16,8 @@ export default function TelaHabitos() {
     const { habitosTodos, setHabitosTodos } = useContext(AllHabitsContext);
     const {form, setForm} = useContext(NewHabit);
     const [enviando, setEnviando] = useState(false);
-
-
-    console.log(form)
-
-    useEffect(() => {
-        getListaHabitos()
-            .then(resposta => {
-                setHabitosTodos(resposta.data)
-                console.log(habitosTodos)
-            })
-            .catch(erro => console.log(erro.response.data.message));
-    }, []);
+    const { habitosHoje, setHabitosHoje } = useContext(HabitsTodayContext);
+    const { progresso, setProgresso } = useContext(ProgressContext);
 
     function preencherInput(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -52,6 +45,30 @@ export default function TelaHabitos() {
             setEnviando(false);
         }        
     }
+
+    useEffect(() => {
+        getListaHabitos()
+            .then(resposta => {
+                setHabitosTodos(resposta.data)
+                console.log(habitosTodos)
+            })
+            .catch(erro => console.log(erro.response.data.message));
+    }, []);
+
+    useEffect(() => {
+        getHabitosHoje()
+            .then(resposta => setHabitosHoje(resposta.data))
+            .catch(erro => console.log(erro.response.data.message));
+    },
+    [habitosTodos]);
+
+    useEffect(() => {
+        if (habitosHoje.length) {
+            setProgresso(100*habitosHoje.filter((habito) => habito.done).length / habitosHoje.length);
+        } else {
+            setProgresso(0);
+        }
+    }, [habitosHoje]);
 
     return (
         <Container>

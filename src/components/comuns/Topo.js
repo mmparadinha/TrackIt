@@ -1,9 +1,7 @@
 import styled from "styled-components"
-import UserContext from "../context/UserContext";
-import { useContext } from "react";
 
 export default function Topo() {
-    const { usuario } = useContext(UserContext);
+    const usuario = JSON.parse(localStorage.getItem('trackit'));
 
     return (
         <Navbar>

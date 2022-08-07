@@ -19,8 +19,8 @@ export default function App() {
     id: '',
     image: '',
     name: '',
-    password: '',
-    token: ''
+    token: '',
+    horario: ''
   });
   const [progresso, setProgresso] = useState(0);
   const [habitosHoje, setHabitosHoje] = useState(null);

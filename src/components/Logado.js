@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import Topo from './comuns/Topo';
 import Menu from './comuns/Menu';
 import styled from "styled-components";
 
 export default function Logado({children}) {
     const navigate = useNavigate();
-    const autenticador = JSON.parse(localStorage.getItem('trackit'));
-    
+    const usuario = JSON.parse(localStorage.getItem('trackit'));
+
     // const tempoLogado = new Date() - autenticador.horario;
     // console.log(tempoLogado)
 
@@ -17,7 +16,7 @@ export default function Logado({children}) {
         navigate('/');
     }
 
-    if (autenticador) {
+    if (usuario.token) {
         return (
             <Container>
                 <Topo />
