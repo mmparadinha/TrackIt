@@ -1,14 +1,25 @@
 import styled from "styled-components";
-import SeletorDia from "./SeletorDia";
-import { postDeletar } from "../../services/trackit";
+import SeletorDiaExistente from "./SeletorDiaExistente";
+import { postDeletar, getListaHabitos } from "../../services/trackit";
+import { useContext } from "react";
+import AllHabitsContext from "../context/AllHabitsContext";
 
 export default function HabitoAtivo({habito}) {
     const dias = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+    const { setHabitosTodos} = useContext(AllHabitsContext);
 
     function deletarHabito(props) {
-        postDeletar(props)
-            .then(resposta => console.log(resposta.data))
-            .catch(erro => console.log(erro.response.data.message));
+        if (window.confirm('Você realmente deseja excluir este hábito?')) {
+            console.log('deleta')
+            postDeletar(props)
+                .then(() => {
+                            getListaHabitos()
+                                .then(resposta => {
+                                    setHabitosTodos(resposta.data)
+                                })
+                                .catch(erro => console.log(erro));})
+                .catch(erro => console.log(erro));
+        }
     }
 
     return (
@@ -20,7 +31,7 @@ export default function HabitoAtivo({habito}) {
                 </div>
             </Titulo>
             <WrapperDias>
-                {dias.map((dia, index) => <SeletorDia key={index} dia={dia} />)}
+                {dias.map((dia, index) => <SeletorDiaExistente key={index} diaNome={dia} diasHabito={habito.days} diaNumero={index}/>)}
             </WrapperDias>
         </Box>
     );

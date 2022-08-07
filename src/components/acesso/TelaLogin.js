@@ -24,26 +24,26 @@ export default function TelaLogin() {
 
         postLogin(login)
             .then(resposta => {
-            localStorage.setItem('trackit', JSON.stringify({token: resposta.data.token, horario: +new Date()}));
-            setUsuario({
-                email: resposta.data.email,
-                id: resposta.data.id,
-                image: resposta.data.image,
-                name: resposta.data.name,
-                password: resposta.data.password,
-                token: resposta.data.token
-            });
-            console.log(resposta.data)
-            navigate('/hoje');
-            })
+                localStorage.setItem('trackit', JSON.stringify({token: resposta.data.token, horario: +new Date()}));
+                setUsuario({
+                    email: resposta.data.email,
+                    id: resposta.data.id,
+                    image: resposta.data.image,
+                    name: resposta.data.name,
+                    password: resposta.data.password,
+                    token: resposta.data.token
+                });
+                console.log(resposta.data)
+                navigate('/hoje');
+                })
             .catch(erro => {
-            alert('Não foi possível logar, tente novamente');
-            console.log(erro, 'erro');
-            setLogin({
-                email: "",
-                password: "",
-            });
-            setEntrando(false);
+                alert('Não foi possível logar, tente novamente');
+                console.log(erro, 'erro');
+                setLogin({
+                    email: "",
+                    password: "",
+                });
+                setEntrando(false);
             });
     }
 

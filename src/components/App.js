@@ -4,6 +4,7 @@ import UserContext from "./context/UserContext";
 import ProgressContext from "./context/ProgressContext";
 import HabitsTodayContext from "./context/HabitsTodayContext";
 import AllHabitsContext from "./context/AllHabitsContext";
+import NewHabitContext from "./context/NewHabit";
 import GlobalStyles from "./comuns/GlobalStyles";
 import TelaLogin from "./acesso/TelaLogin";
 import TelaCadastro from "./acesso/TelaCadastro";
@@ -23,12 +24,17 @@ export default function App() {
   });
   const [progresso, setProgresso] = useState(0);
   const [habitosHoje, setHabitosHoje] = useState(null);
-  const [habitos, setHabitos] = useState(null);
+  const [habitosTodos, setHabitosTodos] = useState(null);
+  const [form, setForm] = useState({
+    name: '',
+    days: []
+  });
 
   return (
     <>
       <GlobalStyles />
-      <AllHabitsContext.Provider value={{ habitos, setHabitos }}>
+      <NewHabitContext.Provider value={{ form, setForm }}>
+      <AllHabitsContext.Provider value={{ habitosTodos, setHabitosTodos }}>
       <HabitsTodayContext.Provider value={{ habitosHoje, setHabitosHoje }}>
         <ProgressContext.Provider value={{ progresso, setProgresso }}>
           <UserContext.Provider value={{ usuario, setUsuario }}>
@@ -57,6 +63,7 @@ export default function App() {
         </ProgressContext.Provider>
       </HabitsTodayContext.Provider>
       </AllHabitsContext.Provider>
+      </NewHabitContext.Provider>
     </>
   );
 }

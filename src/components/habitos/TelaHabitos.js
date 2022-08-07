@@ -1,34 +1,56 @@
 import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { getListaHabitos, postHabitoNovo } from "../../services/trackit";
-import SeletorDia from "./SeletorDia";
+import SeletorDiaCriar from "./SeletorDiaCriar";
 import HabitoAtivo from "./HabitoAtivo";
+import Loading from "../comuns/Loading";
 import AllHabitsContext from "../context/AllHabitsContext";
+import NewHabit from "../context/NewHabit";
 
 export default function TelaHabitos() {
     const [criar, setCriar] = useState(false);
     const dias = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
-    const { habitos, setHabitos } = useContext(AllHabitsContext);
+    const { habitosTodos, setHabitosTodos } = useContext(AllHabitsContext);
+    const {form, setForm} = useContext(NewHabit);
+    const [enviando, setEnviando] = useState(false);
+
+
+    console.log(form)
 
     useEffect(() => {
         getListaHabitos()
             .then(resposta => {
-                setHabitos(resposta.data)
-                console.log(habitos)
+                setHabitosTodos(resposta.data)
+                console.log(habitosTodos)
             })
             .catch(erro => console.log(erro.response.data.message));
     }, []);
 
-    function criarHabito() {
-        console.log('bora criar')
-        let body = {
-            name: 'Tomar whey com 3 ovos crus e correr ao redor de Konoha 50x com as caneleiras cheias',
-            days: [1, 3, 5]
-        }
+    function preencherInput(e) {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    }
 
-        postHabitoNovo(body)
-            .then(resposta => console.log(resposta.data))
+    function criarHabito() {
+        setEnviando(true);
+        if (form.days.length !== 0 && form.name !== '') {
+            postHabitoNovo(form)
+            .then(() => {
+                                getListaHabitos()
+                                    .then(resposta => {
+                                        setHabitosTodos(resposta.data);
+                                        setCriar(false);
+                                        setForm({
+                                            name: '',
+                                            days: []
+                                        })
+                                        setEnviando(false)
+                                    })
+                                    .catch(erro => console.log(erro.response.data.message));})
             .catch(erro => console.log(erro.response.data.message));
+        } else {
+            alert('Ei, não esqueça de selecionar o nome e os dias para acompanhar seu hábito!');
+            setEnviando(false);
+        }        
     }
 
     return (
@@ -39,21 +61,28 @@ export default function TelaHabitos() {
             </Title>
             {criar && (<Box>
                 <div>
-                    <input placeholder='nome do hábito'></input>
+                    <input
+                        disabled={enviando}
+                        required
+                        name='name'
+                        value={form.name}
+                        onChange={preencherInput}
+                        placeholder="nome do habito"
+                    />
                     <WrapperDias>
-                        {dias.map((dia, index) => <SeletorDia key={index} dia={dia} />)}
+                        {dias.map((dia, index) => <SeletorDiaCriar key={index} enviando={enviando} diaNome={dia} diasSelecionados={form.days} diaNumero={index}/>)}
                     </WrapperDias>
                 </div>
 
                 <Wrapper>
                     <span onClick={() => setCriar(false)}>Cancelar</span>
-                    <button onClick={criarHabito}>Salvar</button>
+                    <button disabled={enviando} onClick={criarHabito}>{enviando ? <Loading /> : 'Salvar'}</button>
                 </Wrapper>
             </Box>)}
 
-            {habitos !== null && habitos.map((habito) => <HabitoAtivo key={habito.id} habito={habito} />)}
+            {habitosTodos !== null && habitosTodos.map((habito) => <HabitoAtivo key={habito.id} habito={habito} />)}
 
-            {habitos !== null && <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>}
+            {(habitosTodos !== null && habitosTodos.length === 0) &&  <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>}
         </Container>
     );
 }
@@ -114,6 +143,10 @@ const Box = styled.div`
         font-size: 20px;
         ::placeholder {
             color: #DBDBDB;
+        }
+        &:disabled {
+            background-color: #F2F2F2;
+            color: #D4D4D4;
         }
     }
 `;
