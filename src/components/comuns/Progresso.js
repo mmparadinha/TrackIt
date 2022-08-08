@@ -5,7 +5,6 @@ import 'react-circular-progressbar/dist/styles.css';
 
 export default function Progresso() {
     const { progresso } = useContext(ProgressContext);
-
     return (
         <CircularProgressbar 
             value={progresso}
@@ -21,4 +20,4 @@ export default function Progresso() {
             })}
         />
     );
-}
+};

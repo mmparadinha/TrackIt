@@ -17,8 +17,8 @@ export default function RecadoProgressoHoje() {
                 {progresso === 0 ? 'Nenhum hábito concluído ainda' : `${progresso.toFixed(0)}% dos habitos concluídos`}
             </Wrapper>
         );
-    }
-}
+    };
+};
 
 const Wrapper = styled.p`
     font-size: 18px;

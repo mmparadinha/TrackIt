@@ -11,17 +11,17 @@ export default function HabitoHoje({ habito }) {
         if (habito.done) {
             desmarcarHabito(props)
                 .then(getHabitosHoje()
-                        .then(resposta => setHabitosHoje(resposta.data))
-                        .catch(erro => console.log(erro.response.data.message)))
-                .catch(erro => console.log(erro.response.data.message));
+                    .then(resposta => setHabitosHoje(resposta.data))
+                    .catch(erro => console.log(erro)))
+                .catch(erro => console.log(erro));
         } else {
             marcarHabito(props)
                 .then(getHabitosHoje()
-                        .then(resposta => setHabitosHoje(resposta.data))
-                        .catch(erro => console.log(erro.response.data.message)))
-                .catch(erro => console.log(erro.response.data.message));
-        }
-    }
+                    .then(resposta => setHabitosHoje(resposta.data))
+                    .catch(erro => console.log(erro)))
+                .catch(erro => console.log(erro));
+        };
+    };
 
     return (
         <Box>
@@ -35,7 +35,7 @@ export default function HabitoHoje({ habito }) {
             </div>
         </Box>
     );
-}
+};
 
 const Box = styled.div`
     background-color: #FFFFFF;
@@ -78,6 +78,11 @@ const Checkbox = styled.div`
     background-color: ${props => props.realizado ? '#8FC549' : '#EBEBEB'};
     border: 1px solid ${props => props.realizado ? 'none' : '#E7E7E7'};
     border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
 
     ion-icon {
         color: #FFFFFF;

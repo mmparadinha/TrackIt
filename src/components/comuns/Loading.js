@@ -1,4 +1,4 @@
-import { ThreeDots } from  'react-loader-spinner'
+import { ThreeDots } from  'react-loader-spinner';
 
 export default function Loading() {
     return (
@@ -8,9 +8,7 @@ export default function Loading() {
         radius="7"
         color="#FFFFFF" 
         ariaLabel="three-dots-loading"
-        wrapperStyle={{}}
-        wrapperClassName="Loading"
         visible={true}
     />
     );
-}
+};

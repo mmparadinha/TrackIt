@@ -6,7 +6,7 @@ import Loading from "../comuns/Loading";
 
 export default function TelaCadastro() {
     const navigate = useNavigate();
-    const [enviando, setEnviando] = useState(false)
+    const [enviando, setEnviando] = useState(false);
     const [cadastro, setCadastro] = useState({
         email: "",
         name: "",
@@ -15,16 +15,14 @@ export default function TelaCadastro() {
     });
 
     function atualizarInput(e) {
-        setCadastro({ ...cadastro, [e.target.name]: e.target.value })
-    }
+        setCadastro({ ...cadastro, [e.target.name]: e.target.value });
+    };
 
     function cadastrar(e) {
         e.preventDefault();
-        setEnviando(!enviando)
-
+        setEnviando(!enviando);
         postCadastrar(cadastro)
-            .then(resposta => {
-                console.log(resposta.data);
+            .then(() => {
                 setEnviando(!enviando);
                 navigate('/');
             })
@@ -38,7 +36,7 @@ export default function TelaCadastro() {
                 });
                 setEnviando(false);
             });
-    }
+    };
 
     return (
         <Main>
@@ -86,7 +84,7 @@ export default function TelaCadastro() {
             <Link to="/">Já tem uma conta? Faça login!</Link>
         </Main>
     );
-}
+};
 
 const Main = styled.div`
     display: flex;

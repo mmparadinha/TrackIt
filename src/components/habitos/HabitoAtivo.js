@@ -10,17 +10,17 @@ export default function HabitoAtivo({habito}) {
 
     function deletarHabito(props) {
         if (window.confirm('Você realmente deseja excluir este hábito?')) {
-            console.log('deleta')
             postDeletar(props)
                 .then(() => {
                             getListaHabitos()
                                 .then(resposta => {
-                                    setHabitosTodos(resposta.data)
+                                    setHabitosTodos(resposta.data);
                                 })
-                                .catch(erro => console.log(erro));})
+                                .catch(erro => console.log(erro));
+                            })
                 .catch(erro => console.log(erro));
-        }
-    }
+        };
+    };
 
     return (
         <Box>
@@ -35,7 +35,7 @@ export default function HabitoAtivo({habito}) {
             </WrapperDias>
         </Box>
     );
-}
+};
 
 const Box = styled.div`
     background-color: #FFFFFF;

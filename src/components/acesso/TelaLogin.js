@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { postLogin } from "../../services/trackit";
 import Loading from "../comuns/Loading";
 
@@ -12,14 +12,19 @@ export default function TelaLogin() {
         password: "",
     });
 
+    useEffect(() => {
+        if (localStorage.getItem('trackit') !== null) {
+            navigate('/hoje');
+        }
+    }, []);
+
     function atualizarInput(e) {
-        setLogin({ ...login, [e.target.name]: e.target.value })
-    }
+        setLogin({ ...login, [e.target.name]: e.target.value });
+    };
 
     function entrar(e) {
         e.preventDefault();
-        setEntrando(true)
-
+        setEntrando(true);
         postLogin(login)
             .then(resposta => {
                 localStorage.setItem('trackit', JSON.stringify({
@@ -30,19 +35,18 @@ export default function TelaLogin() {
                     token: resposta.data.token,
                     horario: +new Date()
                 }));
-                console.log(resposta.data)
                 navigate('/hoje');
                 })
             .catch(erro => {
                 alert('Não foi possível logar, tente novamente');
-                console.log(erro, 'erro');
+                console.log(erro);
                 setLogin({
                     email: "",
                     password: "",
                 });
                 setEntrando(false);
             });
-    }
+    };
 
     return (
         <Main>
@@ -72,7 +76,7 @@ export default function TelaLogin() {
             <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
         </Main>
     );
-}
+};
 
 const Main = styled.div`
     display: flex;

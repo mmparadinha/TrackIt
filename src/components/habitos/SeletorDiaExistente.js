@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 
 export default function SeletorDiaExistente({ diaNome, diasHabito, diaNumero }) {
     let marcado = false;
@@ -12,24 +11,24 @@ export default function SeletorDiaExistente({ diaNome, diasHabito, diaNumero }) 
             marcado = true;
             break;
         };
-    }
+    };
 
     //mais elegante, porém menos eficiente
-    // diasHabito.filter(dia => filtrar(dia))
+    // diasHabito.filter(dia => filtrar(dia));
 
     // function filtrar(dia) {
     // console.log(diaNome, dia, diaNumero)
     //     if (dia === diaNumero) {
     //         console.log('parei');
     //         marcado = true;
-    //         return
-    //     }
-    // }
+    //         return;
+    //     };
+    // };
 
     return (
         <ButtonDias selected={marcado} onClick={() => alert('EM BREVE: ainda não é possível alterar um hábito já existente.\nSiga firme no planejado!!')}>{diaNome}</ButtonDias>
     );
-}
+};
 
 const ButtonDias = styled.button`
     color: ${props => props.selected ? '#FFFFFF' : '#DBDBDB'};;

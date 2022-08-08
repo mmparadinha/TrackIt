@@ -1,15 +1,22 @@
-import styled from "styled-components"
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 export default function Topo() {
     const usuario = JSON.parse(localStorage.getItem('trackit'));
+    const navigate = useNavigate();
+
+    function voltarHome() {
+        navigate('/');
+        localStorage.clear();
+    };
 
     return (
         <Navbar>
-            <h1>TrackIt</h1>
+            <h1 onClick={voltarHome}>TrackIt</h1>
             <img src={usuario.image} alt='imagem do usuário' />
         </Navbar>
-    )
-}
+    );
+};
 
 const Navbar = styled.div`
     background-color: #126BA5;
@@ -29,6 +36,10 @@ const Navbar = styled.div`
         font-family: 'Playball', cursive;
         font-size: 39px;
         color: #FFFFFF;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.7;
+        }
     }
 
     img {

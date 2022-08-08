@@ -1,9 +1,8 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import Progresso from "./Progresso";
 
 export default function Menu() {
-
     return (
         <Footer>
             <Link to='/habitos'>
@@ -20,8 +19,8 @@ export default function Menu() {
                 <h4>Histórico</h4>
             </Link>
         </Footer>
-    )
-}
+    );
+};
 
 const Footer = styled.div`
     background-color: #FFFFFF;
