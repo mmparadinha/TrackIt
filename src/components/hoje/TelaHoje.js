@@ -42,5 +42,6 @@ const Container = styled.div`
         margin-top: 28px;
         font-size: 23px;
         color: #126BA5;
+        margin-bottom: 4px;
     }
 `;

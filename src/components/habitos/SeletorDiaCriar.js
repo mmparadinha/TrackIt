@@ -52,6 +52,6 @@ const ButtonDias = styled.button`
     }
     &:disabled {
         cursor: default;
-        opacity: 1;
+        opacity: 0.7;
     }
 `;
