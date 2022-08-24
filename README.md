@@ -9,25 +9,25 @@ TrackIt is a straight forward, easy to use habit tracker!
 
 You often forget your desired goal or fail to realize your accomplishment so far?
 
-Stabilishing a new habit is already demanding, so a simpler tracker won't increase the effort load while improving your perception of progress!
+Stabilishing a new habit is already demanding, so a simpler tracker won't overload the activity while improving your perception of progress!
 
-Try it: create an habit, set the days and ***TrackIt*** right now!
+Try it:
+  - Name an habit
+  - Set the days
+  - ***TrackIt***
+  - Check your daily habits list
+  - Review your monthly performance
+
 
 ## Built With
 <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="logo react"/> </br>
-<img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" alt="logo react-router"/> </br>
-[react-calendar](https://github.com/wojtekmaj/react-calendar#readme) </br>
-[react-circular-progressbar](https://github.com/kevinsqi/react-circular-progressbar#readme) </br>
-[react-loader-spinner](https://www.npmjs.com/package/react-loader-spinner) </br>
+
 
 ## How to run
 
---in progress--
+Run the application at your local host, make a registration, login and start using it!
+
 
 ## Versioning
 
 v1.0.0 - Launch
-
-## Api Reference
-
---in progress--
