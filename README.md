@@ -1,6 +1,6 @@
 <img src="./public/assets/logo_TrackIt.png" alt="Logo of the project" align="right"/>
 
-# TrackIt &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
+# TrackIt
 
 TrackIt is a straight forward, easy to use habit tracker!
 
@@ -26,8 +26,3 @@ Try it:
 ## How to run
 
 Run the application at your local host, make a registration, login and start using it!
-
-
-## Versioning
-
-v1.0.0 - Launch
